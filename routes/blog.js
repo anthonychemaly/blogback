@@ -3,6 +3,8 @@ var router = express.Router();
 var apis = require("../controllers/blog.controller");
 
 /* GET users listing. */
+router.put("/:id", apis.updateBlog);
+router.delete("/:id", apis.deleteBlog);
 router.get("/", apis.getAllBlogs);
 router.post("/", apis.postBlog);
 

@@ -36,3 +36,35 @@ exports.getAllBlogs = async (req, res) => {
     }
   });
 };
+
+exports.updateBlog = async (req, res) => {
+  Blog.findByIdAndUpdate(req.params.id, req.body, (err, data) => {
+    if (err) {
+      res.send({
+        success: false,
+        error: err,
+      });
+    } else {
+      res.send({
+        success: true,
+        data: data,
+      });
+    }
+  });
+};
+
+exports.deleteBlog = async (req, res) => {
+  Blog.findByIdAndDelete(req.params.id, (err, data) => {
+    if (err) {
+      res.send({
+        success: false,
+        error: err,
+      });
+    } else {
+      res.send({
+        success: true,
+        data: data,
+      });
+    }
+  });
+};
