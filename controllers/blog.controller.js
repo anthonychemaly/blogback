@@ -68,3 +68,19 @@ exports.deleteBlog = async (req, res) => {
     }
   });
 };
+
+exports.getBlog = async (req, res) => {
+  Blog.findById(req.params.id, (err, data) => {
+    if (err) {
+      res.send({
+        success: false,
+        error: err,
+      });
+    } else {
+      res.send({
+        success: true,
+        data: data,
+      });
+    }
+  });
+};
