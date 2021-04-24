@@ -10,6 +10,7 @@ var usersRouter = require("./routes/users");
 var blogsRouter = require("./routes/blog");
 
 var app = express();
+app.use(cors())
 
 mongoose.connect(
   "mongodb+srv://admin:admin@cluster0.kehjl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
@@ -23,6 +24,7 @@ mongoose.connect(
   }
 );
 
+app.use(cors);
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
