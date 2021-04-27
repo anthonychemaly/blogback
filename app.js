@@ -7,6 +7,7 @@ var mongoose = require("mongoose");
 var cors = require("cors");
 
 var indexRouter = require("./routes/index");
+var adminsRouter = require("./routes/admin");
 var usersRouter = require("./routes/users");
 var blogsRouter = require("./routes/blog");
 
@@ -36,6 +37,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+app.use("/admin", adminsRouter);
 app.use("/users", usersRouter);
 app.use("/blogs", blogsRouter);
 
