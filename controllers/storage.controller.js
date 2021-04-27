@@ -15,7 +15,7 @@ exports.UploadProfilePic = async (req, res) => {
 
       var newMedia = new Media({
         type: file.mimetype,
-        url: `https://blogback.herokuapp.com/storage/profile/${decodedtoken.id}/${file.name}`,
+        url: `https://blogback.herokuapp.com/images/profile/${decodedtoken.id}/${file.name}`,
         fileName: file.name,
         admin: decodedtoken.id,
         created_at: new Date(),
