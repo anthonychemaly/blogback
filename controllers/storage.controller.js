@@ -9,7 +9,7 @@ exports.UploadProfilePic = async (req, res) => {
 //     res.status(400).send("Error: No files found");
 //   } else {
     const file = req.files.file;
-    const blob = firebase.bucket.file(file);
+    const blob = firebase.bucket.file(file.name);
 
     const blobWriter = blob.createWriteStream({
       metadata: {
