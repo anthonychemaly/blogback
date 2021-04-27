@@ -21,7 +21,7 @@ var blogsRouter = require("./routes/blog");
 // var fileupload = require("express-fileupload");
 
 admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
-const bucket = admin.storage()
+const bucket = admin.storage().bucket()
 
 var app = express();
 
