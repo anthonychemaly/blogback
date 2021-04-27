@@ -3,11 +3,13 @@ var jwt_decode = require("jwt-decode");
 var Media = require("../models/media");
 const Admin = require("../models/admin");
 var firebase = require("firebase/app");
-var ref = firebase.storage().ref();
+import "firebase/storage"; // <----
+
+const storageRef = firebase.storage().ref();
 
 exports.UploadProfilePic = async (req, res) => {
   const file = req.files.upload;
-  ref.put(file).then((snapshot) => {
+  storageRef.put(file).then((snapshot) => {
     console.log("Uploaded a blob or file!");
   });
   //   var token = req.body.token || req.query.token || req.headers["token"];
