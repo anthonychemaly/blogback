@@ -7,7 +7,7 @@ var adminSchema = new Schema({
   name: { type: String },
   email: { type: String, unique: true },
   password: { type: String },
-  picture: String,
+  picture: { type: Schema.Types.ObjectId, ref: 'Media' },
   role: String,
 });
 
