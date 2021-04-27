@@ -13,26 +13,29 @@ exports.UploadProfilePic = async (req, res) => {
 
     var newMedia = new Media({
       type: file.mimetype,
-      url: `https://blogback.herokuapp.com/images/profile/${
-        decodedtoken.id + file.name
-      }`,
+      url: `https://blogback.herokuapp.com/images/${file.name}`,
       fileName: file.name,
       admin: decodedtoken.id,
       created_at: new Date(),
     });
 
     newMedia.save().then((mediaData) => {
-      Admin.findByIdAndUpdate(
-        decodedtoken.id,
-        { picture: mediaData._id },
-        (err, adminData) => {
-          if (err) res.send(err);
-          res.send({
-            success: true,
-            data: adminData,
-          });
-        }
-      );
+      if (err) res.send(err);
+      res.send({
+        success: true,
+        data: mediaData,
+      });
+      //   Admin.findByIdAndUpdate(
+      //     decodedtoken.id,
+      //     { picture: mediaData._id },
+      //     (err, adminData) => {
+      //       if (err) res.send(err);
+      //       res.send({
+      //         success: true,
+      //         data: adminData,
+      //       });
+      //     }
+      //   );
     });
   });
 };
