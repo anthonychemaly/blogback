@@ -35,7 +35,7 @@ exports.AdminLogin = async function (req, res, next) {
             };
             var token = jwt.sign(payload, config.secret);
 
-            Admin.findById(admin._id, function (err, result) {
+            Admin.findById(admin._id).populate('picture').exec((err, result)=> {
               var newSession = new Sessions({
                 ip: req.body.ip,
                 aId: result._id,
