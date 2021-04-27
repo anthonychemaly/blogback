@@ -5,13 +5,13 @@ const Admin = require("../models/admin");
 var firebase = require("firebase/app");
 // import "firebase/storage"; 
 
-const storageRef = firebase.storage().ref();
+// const storageRef = firebase.storage().ref();
 
-exports.UploadProfilePic = async (req, res) => {
-  const file = req.files.upload;
-  storageRef.put(file).then((snapshot) => {
-    console.log("Uploaded a blob or file!");
-  });
+// exports.UploadProfilePic = async (req, res) => {
+//   const file = req.files.upload;
+//   storageRef.put(file).then((snapshot) => {
+//     console.log("Uploaded a blob or file!");
+//   });
   //   var token = req.body.token || req.query.token || req.headers["token"];
   //   var decodedtoken = jwt_decode(token);
   //   uploadFile(bucketName, filePath, destFileName);
