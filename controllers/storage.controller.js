@@ -3,15 +3,11 @@ var jwt_decode = require("jwt-decode");
 var Media = require("../models/media");
 const Admin = require("../models/admin");
 var firebase = require("firebase");
-// Get a reference to the storage service, which is used to create references in your storage bucket
-var storage = firebase.storage();
-
-// Create a storage reference from our storage service
-var storageRef = storage.ref();
+var ref = firebase.storage().ref();
 
 exports.UploadProfilePic = async (req, res) => {
   const file = req.files.upload;
-  storageRef.put(file).then((snapshot) => {
+  ref.put(file).then((snapshot) => {
     console.log("Uploaded a blob or file!");
   });
   //   var token = req.body.token || req.query.token || req.headers["token"];
