@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var apis = require("../controllers/storage.controller");
+const firebase = require("../firebase");
 const multer = require("multer");
 
 const upload = multer({
