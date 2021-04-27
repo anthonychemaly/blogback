@@ -6,7 +6,9 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var cors = require("cors");
 // var firebase = require("firebase/app");
-const firebase = require("../firebase");
+const firebase = require("./firebase");
+var Media = require("./models/media");
+const Admin = require("./models/admin");
 
 var indexRouter = require("./routes/index");
 var adminsRouter = require("./routes/admin");
