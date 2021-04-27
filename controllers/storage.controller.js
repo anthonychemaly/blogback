@@ -9,13 +9,13 @@ exports.UploadProfilePic = async (req, res) => {
   const file = req.files.upload;
 
   file.mv(
-    `./public/images/profile/${decodedtoken.id}/${file.name}`,
+    `./public/images/profile/${decodedtoken.id + file.name}`,
     (err, result) => {
       if (err) res.send(err);
 
       var newMedia = new Media({
         type: file.mimetype,
-        url: `https://blogback.herokuapp.com/images/profile/${decodedtoken.id}/${file.name}`,
+        url: `https://blogback.herokuapp.com/images/profile/${decodedtoken.id + file.name}`,
         fileName: file.name,
         admin: decodedtoken.id,
         created_at: new Date(),
