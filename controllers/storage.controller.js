@@ -3,7 +3,7 @@ var jwt_decode = require("jwt-decode");
 var Media = require("../models/media");
 const Admin = require("../models/admin");
 var firebase = require("firebase/app");
-import "firebase/storage"; // <----
+// import "firebase/storage"; 
 
 const storageRef = firebase.storage().ref();
 
