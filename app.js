@@ -61,7 +61,7 @@ app.post("/upload/profile", upload.single("file"), (req, res) => {
   if (!req.file) {
     res.status(400).send("Error: No files found");
   } else {
-    console.log(req.file.filename)
+    console.log(req.file)
     // const blob = firebase.bucket.file(req.file.originalname);
 
     // const blobWriter = blob.createWriteStream({
