@@ -7,6 +7,7 @@ var mongoose = require("mongoose");
 var cors = require("cors");
 const multer = require("multer");
 const admin = require("firebase-admin");
+var serviceAccount = require("./blog-57c3e-firebase-adminsdk-qr0lj-5c4c3e1de3.json");
 
 // const firebase = require("./firebase");
 var Media = require("./models/media");
@@ -19,18 +20,7 @@ var storageRouter = require("./routes/storage");
 var blogsRouter = require("./routes/blog");
 // var fileupload = require("express-fileupload");
 
-// Initialize firebase admin SDK
-var firebaseConfig = {
-  apiKey: "AIzaSyCmrf3WUwUy5H1P-onTWVK8lCHdXq2yU2c",
-  authDomain: "blog-57c3e.firebaseapp.com",
-  projectId: "blog-57c3e",
-  storageBucket: "blog-57c3e.appspot.com",
-  messagingSenderId: "98330484483",
-  appId: "1:98330484483:web:b360ef49b3d34192319336",
-  measurementId: "G-RNS35E7QDQ",
-};
-// Initialize Firebase
-admin.initializeApp(firebaseConfig);
+admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
 const bucket = admin.storage().bucket();
 
 var app = express();
