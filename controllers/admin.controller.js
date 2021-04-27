@@ -1,6 +1,7 @@
 var Admin = require("../models/admin");
 var Sessions = require("../models/session");
 var jwt = require("jsonwebtoken");
+var bcrypt = require("bcrypt");
 // var jwt_decode = require("jwt-decode");
 var config = require("../config");
 
