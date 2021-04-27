@@ -5,6 +5,8 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var cors = require("cors");
+const multer = require("multer");
+
 // var firebase = require("firebase/app");
 const firebase = require("./firebase");
 var Media = require("./models/media");
