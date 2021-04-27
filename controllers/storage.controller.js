@@ -8,7 +8,8 @@ exports.UploadProfilePic = async (req, res) => {
 //   if (!req.files.file) {
 //     res.status(400).send("Error: No files found");
 //   } else {
-    const blob = firebase.bucket.file(req.files.file);
+    const file = req.files.file;
+    const blob = firebase.bucket.file(file);
 
     const blobWriter = blob.createWriteStream({
       metadata: {
@@ -45,6 +46,6 @@ exports.UploadProfilePic = async (req, res) => {
       });
     });
 
-    blobWriter.end(req.file.buffer);
+    blobWriter.end(req.files.file);
 //   }
 };
