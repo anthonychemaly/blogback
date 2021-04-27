@@ -41,7 +41,7 @@ app.use("/", indexRouter);
 app.use("/admin", adminsRouter);
 app.use("/users", usersRouter);
 app.use("/blogs", blogsRouter);
-app.use("/storage", storageRouter);
+app.use("/upload", storageRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
