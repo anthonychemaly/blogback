@@ -87,7 +87,7 @@ app.post("/profile", upload.single("file"), (req, res) => {
     blobWriter.on("finish", () => {
       // res.status(200).send("File uploaded.");
       var newMedia = new Media({
-        type: file.mimetype,
+        type: req.file.mimetype,
         // url: `https://blogback.herokuapp.com/images/${file.name}`,
         url: `https://firebasestorage.googleapis.com/v0/b/blog-57c3e.appspot.com/o/${req.file.filename}?alt=media&token=05d5db15-3075-4785-b161-77952fe30a73`,
         fileName: req.file.filename,
