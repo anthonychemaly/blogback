@@ -5,7 +5,7 @@ const Admin = require("../models/admin");
 const firebase = require("../firebase");
 
 exports.UploadProfilePic = async (req, res) => {
-  if (!req.file) {
+  if (!req.files.file) {
     res.status(400).send("Error: No files found");
   } else {
     const blob = firebase.bucket.file(req.files.file);
