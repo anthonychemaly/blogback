@@ -7,7 +7,6 @@ var mongoose = require("mongoose");
 var cors = require("cors");
 const multer = require("multer");
 
-// var firebase = require("firebase/app");
 const firebase = require("./firebase");
 var Media = require("./models/media");
 const Admin = require("./models/admin");
@@ -61,24 +60,45 @@ app.post("/profile", upload.single("file"), (req, res) => {
   if (!req.file) {
     res.status(400).send("Error: No files found");
   } else {
-    console.log(req.file)
-    // const blob = firebase.bucket.file(req.file.originalname);
+    // console.log(req.file)
+    const blob = firebase.bucket.file(req.file.originalname);
 
-    // const blobWriter = blob.createWriteStream({
-    //   metadata: {
-    //     contentType: req.file.mimetype,
-    //   },
-    // });
+    const blobWriter = blob.createWriteStream({
+      metadata: {
+        contentType: req.file.mimetype,
+      },
+    });
 
-    // blobWriter.on("error", (err) => {
-    //   console.log(err);
-    // });
+    blobWriter.on("error", (err) => {
+      console.log(err);
+    });
 
-    // blobWriter.on("finish", () => {
-    //   res.status(200).send("File uploaded.");
-    // });
+    blobWriter.on("finish", () => {
+      res.status(200).send("File uploaded.");
+      var newMedia = new Media({
+        type: file.mimetype,
+        //   url: `https://blogback.herokuapp.com/images/${file.name}`,
+        fileName: file.name,
+        admin: decodedtoken.id,
+        created_at: new Date(),
+      });
 
-    // blobWriter.end(req.file.buffer);
+      newMedia.save().then((mediaData) => {
+        Admin.findByIdAndUpdate(
+          decodedtoken.id,
+          { picture: mediaData._id },
+          (err, adminData) => {
+            if (err) res.send(err);
+            res.send({
+              success: true,
+              data: adminData,
+            });
+          }
+        );
+      });
+    });
+
+    blobWriter.end(req.file.buffer);
   }
 });
 
