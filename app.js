@@ -18,6 +18,7 @@ var adminsRouter = require("./routes/admin");
 var usersRouter = require("./routes/users");
 var storageRouter = require("./routes/storage");
 var blogsRouter = require("./routes/blog");
+const { default: jwtDecode } = require("jwt-decode");
 // var fileupload = require("express-fileupload");
 
 admin.initializeApp({
@@ -65,6 +66,8 @@ const upload = multer({
 // app.use(upload.single());
 
 app.post("/profile", upload.single("file"), (req, res) => {
+  const token = req.headers.token;
+  const decodedtoken = jwtDecode(token);
   if (!req.file) {
     res.status(400).send("Error: No files found");
   } else {
@@ -82,7 +85,7 @@ app.post("/profile", upload.single("file"), (req, res) => {
     });
 
     blobWriter.on("finish", () => {
-      res.status(200).send("File uploaded.");
+      // res.status(200).send("File uploaded.");
       var newMedia = new Media({
         type: file.mimetype,
         // url: `https://blogback.herokuapp.com/images/${file.name}`,
