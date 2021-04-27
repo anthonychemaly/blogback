@@ -9,7 +9,7 @@ exports.UploadProfilePic = async (req, res) => {
   var decodedtoken = jwt_decode(token);
 
   file.mv(
-    `./public/images/profile/${decodedtoken.id + file.name}`,
+    `./public/images/profile/${file.name}`,
     (err, result) => {
       if (err) res.send(err);
 
