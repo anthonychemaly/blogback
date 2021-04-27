@@ -7,12 +7,12 @@ var adminSchema = new Schema({
   name: { type: String },
   email: { type: String, unique: true },
   password: { type: String },
+  picture: String,
   role: String,
 });
- 
 
 adminSchema.pre("save", function (next) {
-  if(!this.isModified('password')) return next();
+  if (!this.isModified("password")) return next();
   if (this.password) {
     this.password = bcrypt.hashSync(this.password, saltRounds);
     next();

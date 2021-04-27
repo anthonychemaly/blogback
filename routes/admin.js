@@ -4,5 +4,6 @@ var apis = require("../controllers/admin.controller");
 
 router.post("/login", apis.AdminLogin);
 router.post("/register", apis.AdminRegister);
+router.post("/profilepicture", apis.AdminProfilePicture);
 
 module.exports = router;

@@ -84,3 +84,5 @@ exports.AdminRegister = async (req, res) => {
         .status(409);
     });
 };
+
+exports.AdminProfilePicture = async function (req, res, next) {};
