@@ -6,8 +6,9 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var cors = require("cors");
 const multer = require("multer");
+const admin = require("firebase-admin");
 
-const firebase = require("./firebase");
+// const firebase = require("./firebase");
 var Media = require("./models/media");
 const Admin = require("./models/admin");
 
@@ -17,6 +18,20 @@ var usersRouter = require("./routes/users");
 var storageRouter = require("./routes/storage");
 var blogsRouter = require("./routes/blog");
 // var fileupload = require("express-fileupload");
+
+// Initialize firebase admin SDK
+var firebaseConfig = {
+  apiKey: "AIzaSyCmrf3WUwUy5H1P-onTWVK8lCHdXq2yU2c",
+  authDomain: "blog-57c3e.firebaseapp.com",
+  projectId: "blog-57c3e",
+  storageBucket: "blog-57c3e.appspot.com",
+  messagingSenderId: "98330484483",
+  appId: "1:98330484483:web:b360ef49b3d34192319336",
+  measurementId: "G-RNS35E7QDQ",
+};
+// Initialize Firebase
+admin.initializeApp(firebaseConfig);
+const bucket = admin.storage().bucket();
 
 var app = express();
 
@@ -61,7 +76,7 @@ app.post("/profile", upload.single("file"), (req, res) => {
     res.status(400).send("Error: No files found");
   } else {
     // console.log(req.file)
-    const blob = firebase.bucket.file(req.file.originalname);
+    const blob = bucket.file(req.file.originalname);
 
     const blobWriter = blob.createWriteStream({
       metadata: {
