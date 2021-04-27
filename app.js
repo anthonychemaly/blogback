@@ -11,6 +11,7 @@ var adminsRouter = require("./routes/admin");
 var usersRouter = require("./routes/users");
 var storageRouter = require("./routes/storage");
 var blogsRouter = require("./routes/blog");
+var fileupload = require("express-fileupload");
 
 var app = express();
 app.use(cors());
@@ -34,6 +35,7 @@ app.set("view engine", "jade");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(fileupload());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
