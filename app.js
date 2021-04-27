@@ -58,10 +58,10 @@ const upload = multer({
 // app.use(upload.single());
 
 app.post("/upload/profile", upload.single("file"), (req, res) => {
-  if (!req.files.file) {
+  if (!req.file) {
     res.status(400).send("Error: No files found");
   } else {
-    const blob = firebase.bucket.file(req.file);
+    const blob = firebase.bucket.file(req.file.originalname);
 
     const blobWriter = blob.createWriteStream({
       metadata: {
@@ -75,27 +75,6 @@ app.post("/upload/profile", upload.single("file"), (req, res) => {
 
     blobWriter.on("finish", () => {
       res.status(200).send("File uploaded.");
-      var newMedia = new Media({
-        type: file.mimetype,
-        //   url: `https://blogback.herokuapp.com/images/${file.name}`,
-        fileName: file.name,
-        admin: decodedtoken.id,
-        created_at: new Date(),
-      });
-
-      newMedia.save().then((mediaData) => {
-        Admin.findByIdAndUpdate(
-          decodedtoken.id,
-          { picture: mediaData._id },
-          (err, adminData) => {
-            if (err) res.send(err);
-            res.send({
-              success: true,
-              data: adminData,
-            });
-          }
-        );
-      });
     });
 
     blobWriter.end(req.file.buffer);
