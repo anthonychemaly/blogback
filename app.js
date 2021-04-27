@@ -89,7 +89,7 @@ app.post("/profile", upload.single("file"), (req, res) => {
       var newMedia = new Media({
         type: req.file.mimetype,
         // url: `https://blogback.herokuapp.com/images/${file.name}`,
-        url: `https://firebasestorage.googleapis.com/v0/b/blog-57c3e.appspot.com/o/${req.file.originalname}`,
+        url: `https://firebasestorage.googleapis.com/v0/b/blog-57c3e.appspot.com/o/${req.file.originalname}?alt=media`,
         fileName: req.file.filename,
         admin: decodedtoken.id,
         created_at: new Date(),
