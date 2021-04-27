@@ -13,20 +13,9 @@ var usersRouter = require("./routes/users");
 var storageRouter = require("./routes/storage");
 var blogsRouter = require("./routes/blog");
 var fileupload = require("express-fileupload");
+const firebase = require("../firebase");
 
 var app = express();
-
-var firebaseConfig = {
-  apiKey: "AIzaSyCmrf3WUwUy5H1P-onTWVK8lCHdXq2yU2c",
-  authDomain: "blog-57c3e.firebaseapp.com",
-  projectId: "blog-57c3e",
-  storageBucket: "blog-57c3e.appspot.com",
-  messagingSenderId: "98330484483",
-  appId: "1:98330484483:web:b360ef49b3d34192319336",
-  measurementId: "G-RNS35E7QDQ",
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
 
 app.use(cors());
 
@@ -58,6 +47,56 @@ app.use("/admin", adminsRouter);
 app.use("/users", usersRouter);
 app.use("/blogs", blogsRouter);
 app.use("/upload", storageRouter);
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
+app.use(upload.single());
+
+app.post("/upload/profile", upload.single("file"), (req, res) => {
+  if (!req.files.file) {
+    res.status(400).send("Error: No files found");
+  } else {
+    const blob = firebase.bucket.file(req.file.originalname);
+
+    const blobWriter = blob.createWriteStream({
+      metadata: {
+        contentType: req.file.mimetype,
+      },
+    });
+
+    blobWriter.on("error", (err) => {
+      console.log(err);
+    });
+
+    blobWriter.on("finish", () => {
+      res.status(200).send("File uploaded.");
+      var newMedia = new Media({
+        type: file.mimetype,
+        //   url: `https://blogback.herokuapp.com/images/${file.name}`,
+        fileName: file.name,
+        admin: decodedtoken.id,
+        created_at: new Date(),
+      });
+
+      newMedia.save().then((mediaData) => {
+        Admin.findByIdAndUpdate(
+          decodedtoken.id,
+          { picture: mediaData._id },
+          (err, adminData) => {
+            if (err) res.send(err);
+            res.send({
+              success: true,
+              data: adminData,
+            });
+          }
+        );
+      });
+    });
+
+    blobWriter.end(req.file.buffer);
+  }
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
