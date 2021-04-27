@@ -5,8 +5,6 @@ var bcrypt = require("bcryptjs");
 // var jwt_decode = require("jwt-decode");
 var config = require("../config");
 
-
-
 exports.AdminLogin = async function (req, res, next) {
   //Find The User
   Admin.findOne({
@@ -46,6 +44,7 @@ exports.AdminLogin = async function (req, res, next) {
                 res.send({
                   success: true,
                   id: result._id,
+                  user: result,
                   token: token,
                   name: result.name,
                 });
