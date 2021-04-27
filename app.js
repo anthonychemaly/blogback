@@ -55,7 +55,7 @@ app.use("/upload", storageRouter);
 const upload = multer({
   storage: multer.memoryStorage(),
 });
-app.use(upload.single());
+// app.use(upload.single());
 
 app.post("/upload/profile", upload.single("file"), (req, res) => {
   if (!req.files.file) {
