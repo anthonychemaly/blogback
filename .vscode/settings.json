@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/dc2b754a-1767-4dfe-b733-e1d254ffe487/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/BlogBack",
+    "appService.deploySubpath": "."
+}

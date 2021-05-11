@@ -19,6 +19,7 @@ var usersRouter = require("./routes/users");
 var storageRouter = require("./routes/storage");
 var blogsRouter = require("./routes/blog");
 const { default: jwtDecode } = require("jwt-decode");
+const Blog = require("./models/blog");
 // var fileupload = require("express-fileupload");
 
 admin.initializeApp({
@@ -65,7 +66,7 @@ const upload = multer({
 });
 // app.use(upload.single());
 
-app.post("/profile", upload.single("file"), (req, res) => {
+app.post("/blogs/image", upload.single("file"), (req, res) => {
   const token = req.headers.token;
   const decodedtoken = jwtDecode(token);
   if (!req.file) {
@@ -85,10 +86,8 @@ app.post("/profile", upload.single("file"), (req, res) => {
     });
 
     blobWriter.on("finish", () => {
-      // res.status(200).send("File uploaded.");
       var newMedia = new Media({
         type: req.file.mimetype,
-        // url: `https://blogback.herokuapp.com/images/${file.name}`,
         url: `https://firebasestorage.googleapis.com/v0/b/blog-57c3e.appspot.com/o/${req.file.originalname}?alt=media`,
         fileName: req.file.filename,
         admin: decodedtoken.id,
@@ -96,14 +95,14 @@ app.post("/profile", upload.single("file"), (req, res) => {
       });
 
       newMedia.save().then((mediaData) => {
-        Admin.findByIdAndUpdate(
-          decodedtoken.id,
-          { picture: mediaData._id },
-          (err, adminData) => {
+        Blog.findByIdAndUpdate(
+          req.body.blogId,
+          { image: mediaData._id },
+          (err, blogData) => {
             if (err) res.send(err);
             res.send({
               success: true,
-              data: mediaData,
+              data: blogData,
             });
           }
         );
