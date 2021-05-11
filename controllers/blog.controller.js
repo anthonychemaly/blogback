@@ -22,19 +22,21 @@ exports.postBlog = async (req, res) => {
 };
 
 exports.getAllBlogs = async (req, res) => {
-  Blog.find({}, (err, data) => {
-    if (err) {
-      res.send({
-        success: false,
-        error: err,
-      });
-    } else {
-      res.send({
-        success: true,
-        data: data,
-      });
-    }
-  });
+  Blog.find({})
+    .populate("image")
+    .exec((err, data) => {
+      if (err) {
+        res.send({
+          success: false,
+          error: err,
+        });
+      } else {
+        res.send({
+          success: true,
+          data: data,
+        });
+      }
+    });
 };
 
 exports.updateBlog = async (req, res) => {
