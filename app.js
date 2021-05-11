@@ -90,7 +90,8 @@ app.post("/blogs/image", upload.single("file"), (req, res) => {
         type: req.file.mimetype,
         url: `https://firebasestorage.googleapis.com/v0/b/blog-57c3e.appspot.com/o/${req.file.originalname}?alt=media`,
         fileName: req.file.filename,
-        admin: decodedtoken.id,
+        // admin: decodedtoken.id,
+        blog: req.body.blogId,
         created_at: new Date(),
       });
 
