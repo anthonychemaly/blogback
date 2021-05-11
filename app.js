@@ -67,8 +67,8 @@ const upload = multer({
 // app.use(upload.single());
 
 app.post("/blogs/image", upload.single("file"), (req, res) => {
-  const token = req.headers.token;
-  const decodedtoken = jwtDecode(token);
+  // const token = req.headers.token;
+  // const decodedtoken = jwtDecode(token);
   if (!req.file) {
     res.status(400).send("Error: No files found");
   } else {
