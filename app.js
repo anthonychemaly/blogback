@@ -72,7 +72,7 @@ app.post("/blogs/image", upload.single("file"), (req, res) => {
   if (!req.file) {
     res.status(400).send("Error: No files found");
   } else {
-    // console.log(req.file)
+    console.log(req.file)
     const blob = bucket.file(req.file.originalname);
 
     const blobWriter = blob.createWriteStream({
