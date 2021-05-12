@@ -66,13 +66,54 @@ const upload = multer({
 });
 // app.use(upload.single());
 
+app.post("/blogs/image/initial", upload.single("file"), (req, res) => {
+  // const token = req.headers.token;
+  // const decodedtoken = jwtDecode(token);
+  if (!req.file) {
+    res.status(400).send("Error: No files found");
+  } else {
+    console.log(req.file);
+    const blob = bucket.file(req.file.originalname);
+
+    const blobWriter = blob.createWriteStream({
+      metadata: {
+        contentType: req.file.mimetype,
+      },
+    });
+
+    blobWriter.on("error", (err) => {
+      console.log(err);
+    });
+
+    blobWriter.on("finish", () => {
+      var newMedia = new Media({
+        type: req.file.mimetype,
+        url: `https://firebasestorage.googleapis.com/v0/b/blog-57c3e.appspot.com/o/${req.file.originalname}?alt=media`,
+        fileName: req.file.filename,
+        // admin: decodedtoken.id,
+        blog: req.body.blogId,
+        created_at: new Date(),
+      });
+
+      newMedia.save().then((mediaData) => {
+        res.send({
+          success: true,
+          data: mediaData,
+        });
+      });
+    });
+
+    blobWriter.end(req.file.buffer);
+  }
+});
+
 app.post("/blogs/image", upload.single("file"), (req, res) => {
   // const token = req.headers.token;
   // const decodedtoken = jwtDecode(token);
   if (!req.file) {
     res.status(400).send("Error: No files found");
   } else {
-    console.log(req.file)
+    console.log(req.file);
     const blob = bucket.file(req.file.originalname);
 
     const blobWriter = blob.createWriteStream({
